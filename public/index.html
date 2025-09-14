@@ -41,7 +41,7 @@
     const chat = document.getElementById('chat');
     const input = document.getElementById('input');
 
-    const ws = new WebSocket('ws://localhost:3001');
+    const ws = new WebSocket('ws://' + location.host);
 
     ws.onopen = () => {
       append("SYSTEM", "Conexão WebSocket aberta", "system");

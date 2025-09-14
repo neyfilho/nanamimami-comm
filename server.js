@@ -36,7 +36,10 @@ wss.on('connection', (ws, req) => {
 
     const postData = JSON.stringify({
       prompt,
-      temperature: 0.7,
+      temperature: 0.8,
+      top_p: 0.9,
+      n_predict: 256,
+      stream: false,
       stop: ['Usuário:', 'Kalika:']
     });
 
