@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  kalika-ws:
+    build: .
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - PORT=3001
+      - LLAMA_HOST=host.docker.internal
+      - LLAMA_PORT=11435
+    command: sh -c "npm run dev"
