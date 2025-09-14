@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Terminal Kalika Debug</title>
+  <style>
+    body {
+      background: #1c1c1e;
+      color: #e5e5e5;
+      font-family: monospace;
+      padding: 1rem;
+    }
+    #chat {
+      background: #111;
+      border: 1px solid #555;
+      border-radius: 5px;
+      padding: 1rem;
+      height: 70vh;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    #input {
+      width: 100%;
+      padding: 0.5rem;
+      background: #222;
+      color: #fff;
+      border: 1px solid #555;
+      font-family: inherit;
+    }
+    .user { color: cyan; }
+    .kalika { color: magenta; }
+    .system { color: orange; }
+  </style>
+</head>
+<body>
+  <h2>Terminal Kalika Debug</h2>
+  <div id="chat"></div>
+  <input id="input" type="text" placeholder="Digite...">
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+
+    const ws = new WebSocket('ws://localhost:3001');
+
+    ws.onopen = () => {
+      append("SYSTEM", "Conexão WebSocket aberta", "system");
+      console.log("WS aberto com sucesso");
+    };
+
+    ws.onerror = (e) => {
+      append("SYSTEM", "Erro no WebSocket: " + e.message, "system");
+      console.error("Erro no WS:", e);
+    };
+
+    ws.onclose = () => {
+      append("SYSTEM", "Conexão WebSocket fechada", "system");
+      console.log("WS fechado");
+    };
+
+    ws.onmessage = (event) => {
+      append("Kalika", event.data, "kalika");
+      console.log("Mensagem recebida do back:", event.data);
+    };
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && input.value.trim() !== '') {
+        const msg = input.value.trim();
+        append("Você", msg, "user");
+        ws.send(msg);
+        console.log("Mensagem enviada:", msg);
+        input.value = '';
+      }
+    });
+
+    function append(sender, text, cls) {
+      const p = document.createElement('p');
+      p.innerHTML = `<strong class="${cls}">${sender}:</strong> ${text}`;
+      chat.appendChild(p);
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+</body>
+</html>
