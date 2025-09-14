@@ -1,4 +1,4 @@
-# nanamimami-comm
+# Nanami Mami Communication Debugger
 
 A minimal WebSocket chat server and web client for interacting with an LLM (Large Language Model) backend, designed for debugging and rapid prototyping.
 
@@ -81,4 +81,6 @@ This project expects an LLM backend with a `/completion` HTTP POST endpoint, suc
 
 ## License
 
-MIT
+No license. No restrictions. Use, copy, destroy, or rewrite as you like.
+
+<img src="https://github.com/neyfilho/nanamimami-comm/blob/main/mamichan.gif">
